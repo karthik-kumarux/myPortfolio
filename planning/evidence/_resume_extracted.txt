@@ -1,0 +1,87 @@
+===== PAGE 1 =====
+MINUGA KARTHIK KUMAR
++91-9959186924  |  karthikyt369@gmail.com  |  linkedin.com/in/karthik-kumar-minuga  |  github.com/karthik-kumarux
+AI/GenAI systems engineer who builds and ships working LLM applications end to end. Architected a tool-using coding agent with a 
+think → act → observe loop and a Tree-sitter code knowledge graph that cuts LLM token consumption by up to 60% while preserving 
+semantic accuracy, and an AI-assisted security platform that uses the Claude API to turn raw scanner output into developer-ready 
+remediation. Works across Python and TypeScript — FastAPI/Node backends, Dockerized deployments, local LLM pipelines with 
+Ollama, semantic retrieval over vector stores, and pytest coverage — with a track record of self-initiated projects taken from 
+problem selection and spec writing through debugging and deployment.
+TECHNICAL SKILLS
+Programming: Python, TypeScript, JavaScript, C
+Generative AI: LLM APIs (Claude, Copilot vscode.lm, OpenAI-compatible), Prompt Engineering, AI Agents, Tool Calling, Agent Loops, 
+Context Engineering, Agent Memory Architectures, Semantic Retrieval, Local LLMs (Ollama, Llama-family), Model Fine-Tuning
+AI / ML: Machine Learning, Deep Learning, Computer Vision, YOLO / Ultralytics, CNNs, DistilBERT, sentence-transformers, Data 
+Preprocessing & Model Evaluation
+AI Application Development: FastAPI, Flask, Node.js, REST APIs, Celery, Redis, Streamlit, VS Code Extension API, Tree-sitter (WASM), 
+FFmpeg
+Data & Storage: PostgreSQL, ChromaDB, MongoDB, MySQL, SQLite
+Developer Tools & Deployment: Git, GitHub, Docker, Docker Compose, Linux, pytest, Nginx, Grafana
+Security Engineering: Vulnerability Assessment / VAPT, OWASP Top 10, Application Security, OWASP ZAP, Nmap, Nikto, Burp Suite
+PROJECTS
+NexCode — AI-Powered Coding Agent for VS Code  |  TypeScript, Node.js, VS Code Extension API, Tree-sitter WASM, LLM APIs
+• Architected a graph-based code representation engine using Tree-sitter WASM that compresses an entire codebase into a 
+structured knowledge graph, cutting LLM token consumption by up to 60% while preserving semantic accuracy — context 
+engineering rather than raw file dumping.
+• Engineered dependency edge mapping across imports, function calls, class hierarchies, and cross-file relationships, so the model 
+reasons reliably over large codebases inside a compressed context window.
+• Designed a think → act → observe agent loop with five extensible tools (code generation, execution, debugging, explanation, file 
+read/write), orchestrating structured and auditable interaction between the LLM and the local development environment.
+• Self-initiated and owned end to end: problem selection, architecture and specification, extension packaging, and debugging of 
+the agent loop against real editor workflows.
+VAPTaaS — AI-Assisted Security Assessment Platform  |  FastAPI, Celery, Redis, PostgreSQL, Docker Compose, Claude API, React, pytest
+• Architected an asynchronous, multi-stage pipeline orchestrating reconnaissance (Nmap), web vulnerability scanning (OWASP 
+ZAP), and misconfiguration checks (Nikto) through Celery task queues backed by Redis and PostgreSQL.
+• Integrated the Claude API as a reasoning layer that transforms raw, unstructured tool output into contextual, developer-
+readable remediation guidance, converting scan noise into actionable engineering work.
+• Containerized the full stack with Docker Compose for repeatable deployments and implemented a pytest suite covering scan 
+orchestration and API endpoints; debugged async failure modes including scan timeouts, database driver issues, and report-
+generation crashes.
+Agentic Memory Architecture — Local-LLM Agent Runtime (Experimental)  |  Python, Ollama, Llama-family models, ChromaDB, sentence-
+transformers, OpenClaw runtime
+• Designed a hybrid memory architecture combining Markdown stores with ChromaDB, using sentence-transformer embeddings 
+for semantic retrieval — a retrieval-oriented context assembly layer feeding a local LLM agent.
+• Modeled distinct episodic, semantic, reflection, and operational memory types to support agent reasoning, planning, and tool 
+use, with CLI-based memory management for inspection and curation.
+• Prototype research project, built to test how retrieval strategy and memory structure change agent behavior over long-running 
+sessions.
+Talking Avatar — Local LLM Multimodal Pipeline  |  Python, Ollama, gTTS, pydub, FFmpeg, Wav2Lip
+• Built an offline pipeline chaining local LLM response generation → speech synthesis → lip-synced video, running entirely on 
+Ollama-hosted models with no external API dependency.
+• Debugged and stitched together multimodal tooling (gTTS, pydub, FFmpeg, Wav2Lip) into a single reproducible generation 
+workflow.
+Crack Detection & Severity Analysis System  |  Python, YOLO (v5/v8), CNNs, Streamlit, Computer Vision
+• Engineered an end-to-end image-processing and reporting pipeline for automated crack identification and severity classification 
+in civil infrastructure, deployed through Streamlit for real-time inspection workflows.
+• Experimented with and evaluated YOLOv5 and YOLOv8 models to select the detection backbone for the deployed pipeline.
+===== PAGE 2 =====
+Security Tooling — Distributed Honeypot Platform & Security Header Analyzer  |  Python, FastAPI, PostgreSQL, Docker, Grafana, 
+Streamlit, ReportLab
+• Architected a multi-service deception platform with independently containerized web, FTP, and API honeypots, normalizing raw 
+attacker activity into structured alerts and attacker profiles surfaced through real-time dashboards.
+• Built a multi-threaded HTTP security header auditor scanning up to 50 domains concurrently, with scan-history comparison and 
+automated PDF/JSON reporting.
+Additional: Flutter + Flask translation application using Argos Translate for offline neural machine translation, with Whisper speech-
+to-text integration prototyped.
+EXPERIENCE
+AI / Machine Learning Intern — Viswa Robotic Cars   March 2026 – Present
+• Contributing to AI and machine learning projects spanning intelligent system development and model implementation, iterating 
+with the team on Python-based ML workflows.
+Machine Learning Intern — Viswa Robotic Cars   June 2025 – August 2025
+• Worked on data preprocessing, model development, and evaluation, collaborating with mentors on industry-oriented AI 
+development workflows.
+Google Android Developer Intern — EduSkills × AICTE   March 2026 – June 2026
+• Developed Android applications with Android Studio and Git, following structured software development and review workflows.
+Cybersecurity Intern — Cisco Networking Academy   June 2025 – August 2025
+• Completed practical training in network security, cyber defense, and threat analysis fundamentals.
+EDUCATION
+B.Tech, Computer Science & Engineering (AI & ML)   2023 – 2027
+Madanapalle Institute of Technology & Science — CGPA: 8.03 / 10.0
+CERTIFICATIONS & ACHIEVEMENTS
+• Cyber Security Professional Program (240 Hrs) — Ethnotech Academy Pvt. Ltd.; ethical hacking, web/API security, SOC 
+operations & SIEM, cloud security fundamentals.
+• Cybersecurity Essentials & Network Basics — Cisco Networking Academy  |  Fundamentals of Cybersecurity — Coursera  |  
+Digital 101 Gold Certificate — NASSCOM.
+• Winner, Department-Level Project Expo  |  HackerRank 3-Star Badge in C (Data Structures & Algorithms).
+• Event Coordinator, AIMEX 2K25 — ran end-to-end logistics and participant coordination for a departmental technical fest; 
+Coordinator, IQNITE quiz platform challenge.

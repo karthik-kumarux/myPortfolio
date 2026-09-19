@@ -1,0 +1,74 @@
+---
+import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
+import { projects } from '@/content/projects';
+
+const project = projects.find(p => p.id === 'crack-analysis');
+if (!project) throw new Error('Project not found');
+---
+
+<CaseStudyLayout project={project} status="VERIFIED">
+  <section id="problem">
+    <h2>Problem</h2>
+    <p>Manual infrastructure inspection for structural cracks is slow, dangerous, and subjective. While deep learning can automate detection, purely identifying a crack is insufficient without real-world measurements and severity classification to drive maintenance decisions.</p>
+  </section>
+
+  <section id="context">
+    <h2>Context</h2>
+    <p>A production-ready computer vision pipeline designed to detect, measure, and classify infrastructure cracks in real-time. It transforms raw imagery into calibrated physical measurements through a customized YOLOv8 architecture.</p>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <p>Trained a robust object detection model on a custom structural dataset, coupling the bounding box output with a scale calibration system to compute real-world physical dimensions (millimeters) rather than arbitrary pixel areas.</p>
+    <ul class="technical-list">
+      <li><strong>Detection Architecture:</strong> YOLOv8 neural network trained over 100 epochs (640×640 input).</li>
+      <li><strong>Measurement Engine:</strong> Reference-object scale calibration calculating crack width and length.</li>
+      <li><strong>Interface:</strong> Interactive Streamlit web application for real-time analysis and annotation.</li>
+    </ul>
+  </section>
+
+  <section id="system-architecture">
+    <h2>System Architecture</h2>
+    <p>The system decouples the heavy PyTorch inference engine from the lightweight presentation layer, allowing real-time video or image processing through a synchronized data pipeline.</p>
+    <div class="architecture-figure">
+      <pre><code>[Input: Image/Video Stream]
+        ↓
+[Pre-processing Engine] (640x640 Normalization)
+        ↓
+[YOLOv8 Inference Engine] (best.pt ~50MB weights)
+        ↓
+[Measurement & Calibration Module]
+  ├── Pixel-to-Millimeter Conversion
+  └── Bounding Box Extraction
+        ↓
+[Severity Classification Logic]
+        ↓
+[Streamlit Presentation Layer] (Visual Annotations)</code></pre>
+    </div>
+  </section>
+
+  <section id="implementation">
+    <h2>Implementation</h2>
+    <p>The core training harness is written in Python using PyTorch, with dedicated scripts for dataset splitting (train/val/test), model training, and evaluation. The final trained weights (49.63 MB) are decoupled from the Streamlit inference application.</p>
+  </section>
+
+  <section id="challenges">
+    <h2>Challenges</h2>
+    <p>Translating bounding box dimensions into accurate physical measurements across varying camera angles required a scale calibration strategy. Without a reference object in the frame, pixel-width alone could not reliably determine structural severity.</p>
+  </section>
+
+  <section id="iterations">
+    <h2>Iterations</h2>
+    <p>Initial training runs converged poorly due to imbalanced dataset partitions. Implementing a strict train/val/test split utility (<code>split_images_train_val.py</code>) stabilized the validation loss and improved the final precision-recall metrics (documented via generated ROC/PR/F1 curves and confusion matrices over the 100-epoch training cycle).</p>
+  </section>
+
+  <section id="result">
+    <h2>Result</h2>
+    <p>The full pipeline is capable of real-time crack detection, separating structural damage from non-cracked surfaces (2-class classification), rendering clear bounding boxes with confidence scores, and providing severity assessments based on measured physical width.</p>
+  </section>
+
+  <section id="lessons">
+    <h2>Lessons</h2>
+    <p>Model accuracy is only half the engineering problem in applied computer vision. The harder half is building the calibration logic that maps the mathematical output (bounding box coordinates) back to meaningful physical reality (millimeters of structural distress).</p>
+  </section>
+</CaseStudyLayout>

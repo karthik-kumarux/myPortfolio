@@ -1,0 +1,149 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import type { Project } from '@/content/projects';
+
+interface Props {
+  project: Project;
+  status: string;
+}
+
+const { project, status } = Astro.props;
+---
+
+<BaseLayout title={`${project.title} — Karthik Kumar`} description={project.summary}>
+  <article class="case-study">
+    <header class="cs-header">
+      <div class="cs-meta">
+        <span class="cs-type">{project.storytellingMode}</span>
+        <span class="cs-status">{status}</span>
+      </div>
+      <h1>{project.title}</h1>
+      <p class="cs-summary">{project.summary}</p>
+
+      {project.links?.github && (
+        <a href={project.links.github} target="_blank" rel="noopener noreferrer" class="button">View Source</a>
+      )}
+    </header>
+
+    <div class="cs-content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style is:global>
+  .case-study {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-4);
+  }
+
+  .cs-header {
+    max-width: var(--reading-max);
+    margin-bottom: var(--space-16);
+  }
+
+  .cs-meta {
+    display: flex;
+    gap: var(--space-4);
+    font-family: var(--font-technical);
+    font-size: 0.875rem;
+    color: var(--color-teal-text-light);
+    margin-bottom: var(--space-3);
+  }
+
+  .cs-status {
+    color: var(--color-signal-text-light);
+    text-transform: uppercase;
+  }
+
+  .cs-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    margin-bottom: var(--space-4);
+  }
+
+  .cs-summary {
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    line-height: 1.5;
+    margin-bottom: var(--space-6);
+  }
+
+  .button {
+    display: inline-block;
+    padding: var(--space-3) var(--space-6);
+    background-color: var(--color-graphite);
+    color: var(--color-text-on-dark);
+    font-family: var(--font-technical);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background-color 0.2s;
+  }
+
+  .button:hover,
+  .button:focus {
+    background-color: var(--color-text-muted);
+  }
+
+  .cs-content {
+    max-width: var(--reading-max);
+  }
+
+  .cs-content section {
+    margin-bottom: var(--space-12);
+  }
+
+  .cs-content h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    border-bottom: 1px solid var(--color-border-light);
+    padding-bottom: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  .cs-content p {
+    margin-bottom: var(--space-4);
+    line-height: 1.6;
+  }
+
+  .technical-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .technical-list li {
+    padding-left: var(--space-4);
+    position: relative;
+    margin-bottom: var(--space-2);
+    line-height: 1.5;
+  }
+
+  .technical-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-signal-text-light);
+  }
+
+  .technical-list strong {
+    font-weight: 500;
+  }
+
+  .architecture-figure {
+    background-color: var(--color-graphite);
+    color: var(--color-text-on-dark);
+    padding: var(--space-6);
+    border-radius: var(--radius-sm);
+    overflow-x: auto;
+    margin-bottom: var(--space-4);
+  }
+
+  .architecture-figure pre {
+    font-family: var(--font-technical);
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+  }
+</style>

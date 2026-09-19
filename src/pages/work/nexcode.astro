@@ -1,0 +1,75 @@
+---
+import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
+import { projects } from '@/content/projects';
+
+const project = projects.find(p => p.id === 'nexcode');
+if (!project) throw new Error('Project not found');
+---
+
+<CaseStudyLayout project={project} status="VERIFIED">
+  <section id="problem">
+    <h2>Problem</h2>
+    <p>Generic code assistants lack awareness of repository structure. Without understanding file relationships, import hierarchies, and dependency graphs, they provide shallow suggestions disconnected from the broader codebase context.</p>
+  </section>
+
+  <section id="context">
+    <h2>Context</h2>
+    <p>NexCode is a VS Code extension prototype that builds a repository-persisted code knowledge graph using Tree-sitter, enabling graph-aware prompting through an agentic <code>think → act → observe</code> reasoning loop.</p>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <p>Rather than treating code files as independent documents, NexCode indexes the workspace into a persistent graph structure that captures file relationships, function exports, and import edges, then uses this graph to construct targeted context windows for AI operations.</p>
+    <ul class="technical-list">
+      <li><strong>Graph Service:</strong> Builds and maintains a <code>.nexcode/graph.json</code> index of the workspace.</li>
+      <li><strong>AI Service:</strong> Routes prompts through a think-act-observe loop with graph-aware context.</li>
+      <li><strong>Sidebar Provider:</strong> VS Code Activity Bar panel for one-click graph operations and status monitoring.</li>
+    </ul>
+  </section>
+
+  <section id="system-architecture">
+    <h2>System Architecture</h2>
+    <p>The extension integrates into VS Code's extension host, maintaining a persistent graph that refreshes on file save and provides context to write, explain, and run code operations.</p>
+    <div class="architecture-figure">
+      <pre><code>[VS Code Extension Host]
+        ↓
+[Graph Service] → .nexcode/graph.json
+  ├── File Walker
+  ├── Import/Export Resolver
+  └── Edge Builder
+        ↓
+[AI Service (think → act → observe)]
+  ├── Write Code (prompt → diff preview → apply)
+  ├── Explain Code (selection → markdown)
+  └── Run Code (terminal execution)
+        ↓
+[Sidebar Provider (Activity Bar)]
+  └── Status / Actions / Graph Preview</code></pre>
+    </div>
+  </section>
+
+  <section id="implementation">
+    <h2>Implementation</h2>
+    <p>Built as a Node.js VS Code extension with five core tools: graph generation, rescan, deletion, context preview, and code operations. The extension ships as a packaged <code>.vsix</code> artifact. Git integration supports both <code>track</code> mode (commit the graph) and <code>ignore</code> mode (auto-add to <code>.gitignore</code>).</p>
+  </section>
+
+  <section id="challenges">
+    <h2>Challenges</h2>
+    <p>Balancing graph completeness with performance required capping the indexable file count (<code>maxFiles: 300</code> default) and implementing incremental refresh on file save rather than full re-indexing on every keystroke.</p>
+  </section>
+
+  <section id="iterations">
+    <h2>Iterations</h2>
+    <p>The initial prototype lacked persistent graph storage, rebuilding the full index on every VS Code session start. Adding repository-persisted <code>graph.json</code> eliminated cold-start latency and enabled cross-session graph continuity.</p>
+  </section>
+
+  <section id="result">
+    <h2>Result</h2>
+    <p>The MVP extension provides graph-aware code operations with write, explain, and run flows, validated through the VS Code Extension Development Host. The packaged <code>.vsix</code> is ready for sideloading or Marketplace publication.</p>
+  </section>
+
+  <section id="lessons">
+    <h2>Lessons</h2>
+    <p>A code knowledge graph is only as useful as its staleness window. Automatic refresh on save strikes the right balance, but a full reindex command remains essential for recovering from graph drift after branch switches or large merges.</p>
+  </section>
+</CaseStudyLayout>

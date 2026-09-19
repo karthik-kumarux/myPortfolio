@@ -1,0 +1,108 @@
+@layer reset, base, layout, utilities;
+
+@layer reset {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  * {
+    margin: 0;
+  }
+  body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+  }
+  input, button, textarea, select {
+    font: inherit;
+  }
+  p, h1, h2, h3, h4, h5, h6 {
+    overflow-wrap: break-word;
+  }
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+  }
+}
+
+@layer base {
+  :root {
+    /* Locked Palette */
+    --color-graphite: #171918;
+    --color-field-paper: #F3F0E7;
+    --color-mist: #D8DED9;
+    --color-signal: #C96B45;
+    --color-teal: #2C7C78;
+
+    /* Text Accessibility Variants */
+    --color-teal-text-light: #23615E; /* Teal on Paper/Mist */
+    --color-teal-text-dark: #62B8B0;  /* Teal on Graphite */
+    --color-signal-text-light: #9B4628; /* Signal on Paper/Mist */
+
+    --color-text-on-dark: #F3F0E7;
+    --color-text-on-light: #171918;
+    --color-text-muted: #59625D;
+
+    /* Borders */
+    --color-border-light: rgba(23, 25, 24, 0.14);
+    --color-border-dark: rgba(243, 240, 231, 0.16);
+
+    /* Radii */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 18px;
+
+    /* Spacing */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-6: 1.5rem;
+    --space-8: 2rem;
+    --space-12: 3rem;
+    --space-16: 4rem;
+    --space-24: 6rem;
+    --space-32: 8rem;
+
+    /* Layout constraints */
+    --content-max: 1440px;
+    --reading-max: 720px;
+
+    /* Typography */
+    /* System font stack for Display and Body, Monospace for Technical */
+    --font-display: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    --font-technical: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  }
+
+  html, body {
+    background-color: var(--color-field-paper);
+    color: var(--color-text-on-light);
+    font-family: var(--font-body);
+    line-height: 1.5;
+  }
+
+  /* Reduce motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  /* Focus visibility */
+  :focus-visible {
+    outline: 2px solid var(--color-signal);
+    outline-offset: 2px;
+  }
+}

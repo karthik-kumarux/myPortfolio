@@ -1,0 +1,261 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Profile — Karthik Kumar" description="Professional profile, experience, and education for Karthik Kumar, Software Engineer.">
+  <section class="profile-container">
+    <header class="profile-header">
+      <h1>Karthik Kumar</h1>
+      <p class="profile-role">Software Engineer</p>
+      <div class="profile-disciplines">
+        <span class="discipline">AI / ML Systems</span>
+        <span class="discipline-separator">·</span>
+        <span class="discipline">Security Automation</span>
+        <span class="discipline-separator">·</span>
+        <span class="discipline">Developer Tooling</span>
+      </div>
+    </header>
+
+    <div class="profile-grid">
+      <div class="profile-main">
+        <section class="profile-section">
+          <h2>About</h2>
+          <p>
+            I am a software engineer focused on building robust, reliable systems across generative AI, security, and developer tooling. I architect applications end to end—from problem selection and specification through local deployment pipelines to production integration. My experience spans Python and TypeScript, encompassing local LLM pipelines, asynchronous tasks, semantic retrieval, and static analysis.
+          </p>
+        </section>
+
+        <section class="profile-section">
+          <h2>Experience</h2>
+
+          <article class="timeline-item">
+            <header>
+              <h3>AI / Machine Learning Intern</h3>
+              <p class="timeline-org">Viswa Robotic Cars</p>
+            </header>
+            <p class="timeline-date">March 2026 &mdash; Present</p>
+            <p class="timeline-desc">Contributing to AI/ML projects focusing on intelligent system development and model implementation, iterating on Python-based ML workflows.</p>
+          </article>
+
+          <article class="timeline-item">
+            <header>
+              <h3>Google Android Developer Intern</h3>
+              <p class="timeline-org">EduSkills &times; AICTE</p>
+            </header>
+            <p class="timeline-date">March 2026 &mdash; June 2026</p>
+            <p class="timeline-desc">Developed Android applications using structured version control and standard software development workflows.</p>
+          </article>
+
+          <article class="timeline-item">
+            <header>
+              <h3>Machine Learning Intern</h3>
+              <p class="timeline-org">Viswa Robotic Cars</p>
+            </header>
+            <p class="timeline-date">June 2025 &mdash; August 2025</p>
+            <p class="timeline-desc">Collaborated on data preprocessing, model development, and evaluation within industry-oriented AI development pipelines.</p>
+          </article>
+
+          <article class="timeline-item">
+            <header>
+              <h3>Cybersecurity Intern</h3>
+              <p class="timeline-org">Cisco Networking Academy</p>
+            </header>
+            <p class="timeline-date">June 2025 &mdash; August 2025</p>
+            <p class="timeline-desc">Practical training in network security, cyber defense, and threat analysis fundamentals.</p>
+          </article>
+        </section>
+      </div>
+
+      <aside class="profile-sidebar">
+        <section class="profile-section">
+          <h2>Education</h2>
+          <article class="timeline-item compact">
+            <header>
+              <h3>B.Tech, Computer Science & Engineering (AI & ML)</h3>
+              <p class="timeline-org">Madanapalle Institute of Technology & Science</p>
+            </header>
+            <p class="timeline-date">2023 &mdash; 2027</p>
+          </article>
+        </section>
+
+        <section class="profile-section">
+          <h2>Capabilities</h2>
+          <ul class="capability-list">
+            <li><strong>Programming:</strong> Python, TypeScript, C</li>
+            <li><strong>Generative AI:</strong> LLM APIs, Tool Calling, Agent Loops, Context Engineering, Semantic Retrieval, Local LLMs (Ollama)</li>
+            <li><strong>AI / ML:</strong> Deep Learning, Computer Vision, YOLO, DistilBERT, sentence-transformers</li>
+            <li><strong>Architecture & API:</strong> FastAPI, Node.js, Celery, Streamlit, VS Code Extension API, Tree-sitter</li>
+            <li><strong>Infrastructure:</strong> Docker, PostgreSQL, Redis, ChromaDB, Nginx</li>
+            <li><strong>Security:</strong> Vulnerability Assessment, OWASP ZAP, Nmap</li>
+          </ul>
+        </section>
+
+        <section class="profile-section">
+          <h2>Certifications & Highlights</h2>
+          <ul class="achievement-list">
+            <li>Cyber Security Professional Program — Ethnotech Academy</li>
+            <li>Winner, Department-Level Project Expo</li>
+            <li>HackerRank 3-Star Badge in C</li>
+            <li>Coordinator, AIMEX 2K25 Technical Fest</li>
+          </ul>
+        </section>
+
+        <div class="sidebar-actions">
+          <a href="https://github.com/karthik-kumarux" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Karthik Kumar's GitHub Profile">GitHub Profile &rarr;</a>
+          <a href="https://linkedin.com/in/karthik-kumar-minuga" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Karthik Kumar's LinkedIn Profile">LinkedIn Profile &rarr;</a>
+          <a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="View Karthik Kumar's PDF Resume">View Resume (PDF) &rarr;</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .profile-container {
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-4) var(--space-16);
+  }
+
+  .profile-header {
+    margin-bottom: var(--space-12);
+  }
+
+  .profile-header h1 {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+    line-height: 1.1;
+    margin-bottom: var(--space-2);
+  }
+
+  .profile-role {
+    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+    font-weight: 500;
+    margin-bottom: var(--space-3);
+  }
+
+  .profile-disciplines {
+    font-family: var(--font-technical);
+    font-size: clamp(0.875rem, 1.5vw, 1rem);
+    color: var(--color-text-muted);
+  }
+
+  .discipline-separator {
+    margin: 0 var(--space-2);
+    color: var(--color-border-light);
+  }
+
+  .profile-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: var(--space-16);
+  }
+
+  .profile-section {
+    margin-bottom: var(--space-12);
+  }
+
+  .profile-section h2 {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: var(--space-6);
+    border-bottom: 1px solid var(--color-border-light);
+    padding-bottom: var(--space-2);
+  }
+
+  .timeline-item {
+    margin-bottom: var(--space-8);
+  }
+
+  .timeline-item.compact {
+    margin-bottom: var(--space-4);
+  }
+
+  .timeline-item h3 {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 500;
+    margin-bottom: var(--space-1);
+  }
+
+  .timeline-org {
+    color: var(--color-text-on-light);
+    font-weight: 500;
+    margin-bottom: var(--space-2);
+  }
+
+  .timeline-date {
+    font-family: var(--font-technical);
+    font-size: 0.875rem;
+    color: var(--color-teal-text-light);
+    margin-bottom: var(--space-3);
+  }
+
+  .timeline-desc {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+  }
+
+  .capability-list,
+  .achievement-list {
+    list-style: none;
+    padding: 0;
+  }
+
+  .capability-list li,
+  .achievement-list li {
+    padding-left: var(--space-4);
+    position: relative;
+    margin-bottom: var(--space-3);
+    line-height: 1.5;
+    color: var(--color-text-muted);
+  }
+
+  .capability-list li::before,
+  .achievement-list li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: var(--color-signal-text-light);
+  }
+
+  .capability-list strong {
+    color: var(--color-text-on-light);
+    font-weight: 500;
+  }
+
+  .sidebar-actions {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-8);
+    padding-top: var(--space-6);
+    border-top: 1px solid var(--color-border-light);
+  }
+
+  .social-link {
+    font-family: var(--font-technical);
+    font-size: 0.875rem;
+    color: var(--color-teal-text-light);
+    transition: color 0.2s ease;
+  }
+
+  .social-link:hover,
+  .social-link:focus {
+    color: var(--color-signal-text-light);
+  }
+
+  @media (max-width: 1024px) {
+    .profile-grid {
+      grid-template-columns: 1fr;
+      gap: var(--space-8);
+    }
+
+    .profile-sidebar {
+      border-top: 1px solid var(--color-border-light);
+      padding-top: var(--space-8);
+    }
+  }
+</style>

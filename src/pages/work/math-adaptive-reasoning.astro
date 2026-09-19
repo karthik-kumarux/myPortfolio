@@ -1,0 +1,68 @@
+---
+import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
+import { projects } from '@/content/projects';
+
+const project = projects.find(p => p.id === 'math-adaptive-reasoning');
+if (!project) throw new Error('Project not found');
+---
+
+<CaseStudyLayout project={project} status="STAGE 1 PILOT">
+  <section id="problem">
+    <h2>Problem</h2>
+    <p>Fixed routing strategies in LLM applications often waste tokens on trivial tasks while failing complex ones. A dynamic router is needed, but we must first empirically validate whether routing yields measurable benefits over a naive approach.</p>
+  </section>
+
+  <section id="context">
+    <h2>Context</h2>
+    <p>This is a Stage 0 (setup) and Stage 1 (pilot) research project. No verifier or production router has been built. The focus is strictly on collecting baseline data points across multiple models and strategies using the GSM8K dataset.</p>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <p>Experimentation harness built to evaluate <code>direct</code>, <code>cot</code> (chain of thought), and <code>program</code> (program-aided) strategies against standard GSM8K questions.</p>
+    <ul class="technical-list">
+      <li><strong>Models:</strong> Qwen2.5-1.5B-Instruct, gpt-4o-mini, claude-3-5-haiku-latest</li>
+      <li><strong>Hardware:</strong> CPU-only execution for initial pilot</li>
+      <li><strong>Data:</strong> Baseline outputs and latency metrics captured as JSONL</li>
+    </ul>
+  </section>
+
+  <section id="system-architecture">
+    <h2>System Architecture</h2>
+    <p>The pilot experimentation framework consists of a configuration-driven runner mapping prompts and models to a unified evaluation format.</p>
+    <div class="architecture-figure">
+      <pre><code>[Dataset: GSM8K]
+       ↓
+[Experiment Runner] → (Direct | CoT | Program-Aided)
+       ↓
+[LLM Endpoints] → (Local Qwen / OpenAI / Anthropic)
+       ↓
+[Results: JSONL + Latency/Token Metrics]</code></pre>
+    </div>
+  </section>
+
+  <section id="implementation">
+    <h2>Implementation</h2>
+    <p>Python-based runner managing environment constraints. Smoke tests execute end-to-end loops and serialize answers for subsequent evaluation stages.</p>
+  </section>
+
+  <section id="challenges">
+    <h2>Challenges</h2>
+    <p>Hardware constraints (CPU-only execution) limited the local model evaluation speed, requiring careful batch size tuning and asynchronous API integration for the cloud models.</p>
+  </section>
+
+  <section id="iterations">
+    <h2>Iterations</h2>
+    <p>Initial naive prompts produced malformed responses from smaller models. Refined the few-shot demonstrations to stabilize output formats across the model suite.</p>
+  </section>
+
+  <section id="result">
+    <h2>Result</h2>
+    <p>Smoke run successfully collected baseline data (<code>pilot_results.jsonl</code>) and generated initial accuracy, latency, and token consumption plots. <strong>Hypothesis testing and router architecture design remain outstanding.</strong></p>
+  </section>
+
+  <section id="lessons">
+    <h2>Lessons</h2>
+    <p>Even basic routing decisions require extremely reliable structured outputs—smaller, instruction-tuned models may drift structurally without robust, constrained sampling.</p>
+  </section>
+</CaseStudyLayout>

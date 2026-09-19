@@ -1,0 +1,73 @@
+---
+import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
+import { projects } from '@/content/projects';
+
+const project = projects.find(p => p.id === 'vaptaas');
+if (!project) throw new Error('Project not found');
+---
+
+<CaseStudyLayout project={project} status="VERIFIED">
+  <section id="problem">
+    <h2>Problem</h2>
+    <p>Security assessments often yield hundreds of fragmented, noisy alerts spanning disparate tools (Nmap, Nikto, OWASP ZAP). Human analysts spend excess time manually correlating vulnerabilities across scanner outputs instead of engineering remediation.</p>
+  </section>
+
+  <section id="context">
+    <h2>Context</h2>
+    <p>VAPTaaS was engineered to normalize reconnaissance and vulnerability scanning into an automated orchestration pipeline, using an AI capability to transform raw scanner XML/JSON into contextual developer guidance.</p>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <p>Replaced synchronous, imperative scanner invocations with a decoupled, asynchronous queue architecture to handle long-running port scans and aggressive web crawling without blocking the API layer.</p>
+    <ul class="technical-list">
+      <li><strong>Backend:</strong> FastAPI with asynchronous task delegation via Celery.</li>
+      <li><strong>Message Broker & Store:</strong> Redis paired with PostgreSQL.</li>
+      <li><strong>AI Layer:</strong> Claude API integrated strictly as an enrichment and reasoning layer.</li>
+    </ul>
+  </section>
+
+  <section id="system-architecture">
+    <h2>System Architecture</h2>
+    <p>The security orchestration pipeline strictly isolates scanning workloads into discrete workers, allowing the UI and API to remain responsive during complex web audits.</p>
+    <div class="architecture-figure">
+      <pre><code>[FastAPI Gateway] ← REST → [React Dashboard]
+        ↓ (Publishes Task)
+[Redis Message Broker]
+        ↓ (Consumes)
+[Celery Worker Cluster]
+  ├── Nmap Scanner Plugin
+  ├── Nikto Vulnerability Plugin
+  └── OWASP ZAP Crawler
+        ↓ (Raw Output)
+[Claude API Reasoning Layer]
+        ↓ (Enriched Remediation JSON)
+[PostgreSQL Persistent Store]</code></pre>
+    </div>
+  </section>
+
+  <section id="implementation">
+    <h2>Implementation</h2>
+    <p>The entire pipeline was containerized using Docker Compose, establishing a repeatable deployment environment. End-to-end integration tests were implemented using pytest to validate both Celery task dispatch and the external API response conformity.</p>
+  </section>
+
+  <section id="challenges">
+    <h2>Challenges</h2>
+    <p>Handling long-running OWASP ZAP scans inevitably led to network timeouts and unhandled exceptions in the initial synchronous API design. Decoupling the execution into Celery background tasks required managing state hydration and database driver pooling.</p>
+  </section>
+
+  <section id="iterations">
+    <h2>Iterations</h2>
+    <p>The initial Claude API prompting produced hallucinated CVSS scores. The prompt pipeline was heavily constrained to strictly summarize the raw tool findings and provide actionable remediation snippets rather than autonomous scoring.</p>
+  </section>
+
+  <section id="result">
+    <h2>Result</h2>
+    <p>The full platform successfully validated scan paths against the OWASP Juice Shop target application. The structured output enables developers to read security issues as software tickets rather than raw network protocol dumps.</p>
+  </section>
+
+  <section id="lessons">
+    <h2>Lessons</h2>
+    <p>External LLMs are exceptional at data normalization (translating three different scanner output formats into one unified schema) when given strict system prompts, but they must never act as the primary source of truth for vulnerability existence.</p>
+  </section>
+</CaseStudyLayout>

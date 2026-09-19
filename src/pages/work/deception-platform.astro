@@ -1,0 +1,70 @@
+---
+import CaseStudyLayout from '@/layouts/CaseStudyLayout.astro';
+import { projects } from '@/content/projects';
+
+const project = projects.find(p => p.id === 'deception-platform');
+if (!project) throw new Error('Project not found');
+---
+
+<CaseStudyLayout project={project} status="VERIFIED">
+  <section id="problem">
+    <h2>Problem</h2>
+    <p>Detecting sophisticated intrusions requires highly specific signals. Analyzing noisy perimeter logs often results in alert fatigue. We needed a low-noise, high-signal system that assumes breach and watches for internal lateral movement.</p>
+  </section>
+
+  <section id="context">
+    <h2>Context</h2>
+    <p>The Deception Platform functions as a distributed network of honeypots designed to look like vulnerable services. Any interaction with these air-gapped nodes is, by definition, unauthorized, providing high-confidence threat intelligence.</p>
+  </section>
+
+  <section id="approach">
+    <h2>Approach</h2>
+    <p>Constructed a containerized environment simulating weak infrastructure. An isolated ingest API logs all HTTP and credential brute-force attempts without exposing the underlying network.</p>
+    <ul class="technical-list">
+      <li><strong>Honeypots:</strong> Custom Web and API decoy services.</li>
+      <li><strong>Ingestion:</strong> Asynchronous API ingest layer capturing headers, payloads, and IPs.</li>
+      <li><strong>Storage & Display:</strong> PostgreSQL backing a real-time dashboard UI.</li>
+    </ul>
+  </section>
+
+  <section id="system-architecture">
+    <h2>System Architecture</h2>
+    <p>A reverse proxy safely routes attacker traffic to isolated containers, mitigating breakout risks while logging all interaction data.</p>
+    <div class="architecture-figure">
+      <pre><code>[Attacker Traffic]
+        ↓
+[Nginx Reverse Proxy (Logging)]
+  ├── [Web Honeypot (Decoy)]
+  └── [API Honeypot (Decoy)]
+        ↓ (Internal Net)
+[API Ingest Service]
+        ↓
+[PostgreSQL DB] ← [Dashboard UI]</code></pre>
+    </div>
+  </section>
+
+  <section id="implementation">
+    <h2>Implementation</h2>
+    <p>Written in Python and packaged entirely in Docker Compose. The platform normalizes chaotic raw requests—like malformed HTTP headers and exotic SQL injection strings—into structured JSON alerts.</p>
+  </section>
+
+  <section id="challenges">
+    <h2>Challenges</h2>
+    <p>Preventing the deception services from being used as pivot points required strict Docker networking constraints. The ingest API had to be placed on a separate internal Docker network bridges, effectively air-gapping the central database from the decoy services.</p>
+  </section>
+
+  <section id="iterations">
+    <h2>Iterations</h2>
+    <p>The first iteration logged raw TCP streams which required heavy manual parsing. We iterated by pushing request normalization to the edge (the honeypot itself), sending structured JSON to the central API rather than raw packets.</p>
+  </section>
+
+  <section id="result">
+    <h2>Result</h2>
+    <p>The platform aggregates the telemetry into a real-time attacker dashboard. It successfully segments web and API attacks, charting behavior patterns over time without the noise of a traditional perimeter firewall.</p>
+  </section>
+
+  <section id="lessons">
+    <h2>Lessons</h2>
+    <p>Intentionally building vulnerable software is harder than building secure software. You must simulate the vulnerability faithfully enough to convince the attacker, but isolate it strictly enough to prevent actual compromise of the host infrastructure.</p>
+  </section>
+</CaseStudyLayout>
