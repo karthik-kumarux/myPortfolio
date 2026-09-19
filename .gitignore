@@ -2,5 +2,8 @@ node_modules/
 dist/
 .astro/
 qa-artifacts/
+qa.js
+.claude/
+planning/
 .DS_Store
 *.log
