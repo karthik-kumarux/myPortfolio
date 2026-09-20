@@ -10,11 +10,9 @@
     "astro": "astro",
     "check": "astro check"
   },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.10",
-    "typescript": "^6.0.3"
-  },
+  "devDependencies": {},
   "dependencies": {
+    "@astrojs/check": "^0.9.10",
     "@astrojs/react": "^6.0.6",
     "@react-three/drei": "^10.7.8",
     "@react-three/fiber": "^9.7.0",
@@ -25,6 +23,7 @@
     "playwright": "^1.63.0",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
-    "three": "^0.186.0"
+    "three": "^0.186.0",
+    "typescript": "^6.0.3"
   }
 }
