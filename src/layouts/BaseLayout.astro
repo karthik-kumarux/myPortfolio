@@ -4,6 +4,7 @@ import Terminal from '@/components/Terminal.jsx';
 import DataTicker from '@/components/DataTicker.jsx';
 import MouseTrail from '@/components/MouseTrail.jsx';
 import DefconToggle from '@/components/DefconToggle.jsx';
+import '../styles/global.css';
 
 interface Props {
   title: string;
@@ -28,7 +29,7 @@ const { title, description } = Astro.props;
 
   <ClientRouter />
 
-  <link rel="stylesheet" href="/src/styles/global.css">
+
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
