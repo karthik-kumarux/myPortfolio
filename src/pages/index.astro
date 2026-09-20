@@ -1,143 +1,221 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import { projects } from '@/content/projects';
+import HeroScene from '@/components/HeroScene.jsx';
+import DecoderText from '@/components/DecoderText.jsx';
 ---
 
 <BaseLayout title="Karthik Kumar — Software Engineer" description="Software Engineer specializing in AI / ML Systems, Security Automation, and Developer Tooling">
-  <section class="hero">
-    <h1>Karthik Kumar</h1>
-    <p class="role">Software Engineer</p>
-    <p class="specializations">AI / ML Systems · Security Automation · Developer Tooling</p>
-  </section>
+  <div class="hero-wrapper">
+    <HeroScene client:only="react" />
+    <section class="hero content-overlay">
+      <h1><DecoderText client:load text="Karthik Kumar" delay={500} loopInterval={5000} /></h1>
+      <p class="role text-ice"><DecoderText client:load text="Architecting resilient systems. Securing the edge." delay={1000} loopInterval={10000} /></p>
+      <p class="specializations font-mono text-muted"><DecoderText client:load text="AI / ML Systems · Security Automation · Developer Tooling" delay={1500} loopInterval={10000} /></p>
+      
+      <div class="metrics">
+        <div class="metric">
+          <span class="label font-mono">SYSTEM_LOAD</span>
+          <span class="value font-mono text-crimson">14%</span>
+        </div>
+        <div class="metric">
+          <span class="label font-mono">UPTIME</span>
+          <span class="value font-mono text-ice">99.998%</span>
+        </div>
+      </div>
+    </section>
+  </div>
 
-  <section class="selected-work">
-    <h2>Selected Work</h2>
+  <section class="selected-work container">
+    <h2 class="section-title text-ice">/SELECTED_PROJECTS</h2>
     <div class="work-grid">
       {projects.map((project) => (
         <article class="work-card">
-          <h3>{project.title}</h3>
-          <p class="work-type">{project.tags[0]}</p>
-          <p>{project.summary}</p>
-          <a href={`/work/${project.id}`} class="work-link" aria-label={`View ${project.title} case study`}>View case study</a>
+          <div class="card-header">
+            <h3>{project.title}</h3>
+            <span class="work-type font-mono text-muted">[{project.tags[0]}]</span>
+          </div>
+          <p class="summary">{project.summary}</p>
+          <a href={`/work/${project.id}`} class="work-link font-mono text-ice" aria-label={`View ${project.title} case study`}>EXPLORE_DATA_SET</a>
         </article>
       ))}
     </div>
-    <a href="/work" class="view-all">View all work</a>
   </section>
 </BaseLayout>
 
 <style>
-  .hero {
-    max-width: var(--reading-max);
-    margin: var(--space-24) auto;
-    padding: 0 var(--space-4);
+  .hero-wrapper {
+    position: relative;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    border-bottom: var(--border-hairline);
+    overflow: hidden;
+  }
+
+  .content-overlay {
+    position: relative;
+    z-index: 10;
+    max-width: var(--content-max);
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-4);
+    width: 100%;
   }
 
   h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 400;
-    line-height: 1.1;
-    margin-bottom: var(--space-2);
+    font-size: clamp(3rem, 8vw, 6rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: var(--space-4);
+    text-transform: uppercase;
   }
 
   .role {
-    font-size: clamp(1.25rem, 2.5vw, 1.5rem);
-    font-weight: 500;
-    margin-bottom: var(--space-3);
+    font-size: clamp(1.25rem, 3vw, 1.75rem);
+    font-weight: 400;
+    margin-bottom: var(--space-4);
+    max-width: 600px;
   }
 
   .specializations {
-    font-size: clamp(1rem, 2vw, 1.125rem);
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-12);
+  }
+
+  .metrics {
+    display: flex;
+    gap: var(--space-8);
+    border: var(--border-hairline);
+    padding: var(--space-4);
+    width: fit-content;
+    background: rgba(5, 5, 5, 0.4);
+    backdrop-filter: blur(4px);
+  }
+
+  .metric {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  .label {
+    font-size: 0.65rem;
     color: var(--color-text-muted);
-    font-family: var(--font-technical);
+    letter-spacing: 0.1em;
+  }
+
+  .value {
+    font-size: 0.875rem;
   }
 
   .selected-work {
-    max-width: var(--content-max);
     margin: var(--space-32) auto;
-    padding: 0 var(--space-4);
   }
 
-  .selected-work h2 {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2rem);
+  .section-title {
+    font-family: var(--font-mono);
+    font-size: 1rem;
     font-weight: 500;
-    margin-bottom: var(--space-8);
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-12);
+    padding-bottom: var(--space-4);
+    border-bottom: var(--border-hairline);
   }
 
   .work-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: var(--space-6);
-    margin-bottom: var(--space-8);
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
   }
 
   .work-card {
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-md);
-    padding: var(--space-6);
-    transition: border-color 0.2s ease;
+    position: relative;
+    border: var(--border-hairline);
+    border-left: 2px solid rgba(255, 255, 255, 0.08);
+    padding: var(--space-8);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(15, 15, 17, 0.5);
+    overflow: hidden;
+  }
+
+  /* Background scanner effect */
+  .work-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(90deg, var(--color-crimson-glow) 0%, transparent 100%);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
   }
 
   .work-card:hover,
   .work-card:focus-within {
-    border-color: var(--color-teal-text-light);
+    border-color: rgba(255, 255, 255, 0.15);
+    border-left-color: var(--color-crimson);
+    background: rgba(20, 20, 22, 0.8);
+    transform: translateX(4px);
   }
 
-  .work-card h3 {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
+  .work-card:hover::before,
+  .work-card:focus-within::before {
+    width: 100%;
+  }
+
+  /* Ensure text stays above the scanner glow */
+  .card-header, .summary, .work-link {
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-4);
+    border-bottom: var(--border-hairline);
+    padding-bottom: var(--space-4);
+  }
+
+  .card-header h3 {
+    font-size: 1.5rem;
     font-weight: 500;
-    margin-bottom: var(--space-2);
   }
 
   .work-type {
-    font-family: var(--font-technical);
-    font-size: 0.875rem;
-    color: var(--color-teal-text-light);
-    margin-bottom: var(--space-3);
+    font-size: 0.75rem;
   }
 
-  .work-card p:not(.work-type) {
+  .summary {
     color: var(--color-text-muted);
-    margin-bottom: var(--space-4);
+    margin-bottom: var(--space-8);
+    max-width: 800px;
   }
 
   .work-link {
-    display: inline-block;
-    color: var(--color-teal-text-light);
-    font-weight: 500;
-    font-size: 0.9375rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
   }
 
   .work-link::after {
-    content: ' →';
+    content: '→';
+    transition: transform 0.2s ease;
   }
 
-  .view-all {
-    display: inline-block;
-    color: var(--color-teal-text-light);
-    font-weight: 500;
-    padding: var(--space-3) var(--space-6);
-    border: 1px solid var(--color-teal-text-light);
-    border-radius: var(--radius-sm);
-    transition: background-color 0.2s ease, color 0.2s ease;
+  .work-link:hover::after {
+    transform: translateX(4px);
   }
 
-  .view-all:hover,
-  .view-all:focus {
-    background-color: var(--color-teal-text-light);
-    color: var(--color-field-paper);
-  }
-
-  @media (max-width: 768px) {
-    .hero {
-      margin: var(--space-16) auto;
-    }
-
+  @media (min-width: 768px) {
     .work-grid {
-      grid-template-columns: 1fr;
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>

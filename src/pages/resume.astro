@@ -1,0 +1,139 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import DecoderText from '@/components/DecoderText.jsx';
+
+const resumeData = {
+  name: "Karthik Kumar",
+  role: "Software Engineer | AI & Security Systems",
+  location: "Global",
+  contact: "karthikyt369@gmail.com",
+  skills: {
+    languages: ["TypeScript", "Python", "C++", "Rust"],
+    technologies: ["React", "Astro", "Node.js", "WebGL", "PyTorch"],
+    concepts: ["Generative AI", "Vulnerability Analysis", "Distributed Systems"]
+  },
+  experience: [
+    {
+      role: "Security AI Architect",
+      company: "Stealth",
+      timeline: "2024 - Present",
+      achievements: [
+        "Architected a Cyber Deception Platform using LLMs to generate honeypots.",
+        "Deployed automated vulnerability scanners reducing detection time by 40%."
+      ]
+    },
+    {
+      role: "Full Stack Engineer",
+      company: "NexCode",
+      timeline: "2023 - 2024",
+      achievements: [
+        "Built a browser-based IDE with real-time compilation.",
+        "Engineered the core routing architecture serving 10k+ MAU."
+      ]
+    }
+  ]
+};
+
+const jsonString = JSON.stringify(resumeData, null, 2);
+---
+
+<BaseLayout title="Resume — Karthik Kumar" description="Terminal view of Karthik Kumar's resume.">
+  <section class="resume-terminal">
+    <div class="terminal-header">
+      <DecoderText client:load text="> cat resume.json" delay={300} className="font-mono text-ice" />
+    </div>
+    
+    <div class="terminal-window">
+      <pre id="resume-output" class="font-mono"></pre>
+      <span class="cursor">_</span>
+    </div>
+  </section>
+</BaseLayout>
+
+<script define:vars={{ jsonString }}>
+  document.addEventListener('astro:page-load', () => {
+    const output = document.getElementById('resume-output');
+    if (!output) return;
+    
+    // Check if we already typed it to prevent double-typing on ViewTransitions
+    if (output.dataset.typed === 'true') {
+      output.innerHTML = jsonString.replace(/\\n/g, '<br/>').replace(/ /g, '&nbsp;');
+      return;
+    }
+    
+    output.innerHTML = '';
+    let i = 0;
+    
+    const typeWriter = () => {
+      // Abort if the user navigated away
+      if (!document.body.contains(output)) return;
+      
+      if (i < jsonString.length) {
+        let char = jsonString.charAt(i);
+        let htmlChar = char;
+        if (char === '\n') htmlChar = '<br/>';
+        else if (char === ' ') htmlChar = '&nbsp;';
+        
+        output.innerHTML += htmlChar;
+        
+        // Auto scroll relative to the window
+        window.scrollTo(0, document.body.scrollHeight);
+        
+        i++;
+        
+        let delay = Math.random() * 15;
+        if (char === '\n' || char === '{' || char === '}') delay = 100;
+        
+        setTimeout(typeWriter, delay);
+      } else {
+        output.dataset.typed = 'true';
+      }
+    };
+    
+    setTimeout(typeWriter, 1000);
+  });
+</script>
+
+<style>
+  .resume-terminal {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--space-8) var(--space-4);
+    min-height: 70vh;
+  }
+
+  .terminal-header {
+    margin-bottom: var(--space-8);
+    font-size: 1.25rem;
+  }
+
+  .terminal-window {
+    background: rgba(5, 5, 5, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: var(--space-8);
+    border-radius: 4px;
+    position: relative;
+    overflow-x: auto;
+  }
+
+  #resume-output {
+    display: inline;
+    color: #a6accd;
+    line-height: 1.6;
+    white-space: pre-wrap;
+    word-break: break-all;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 10px;
+    background: var(--color-ice-blue);
+    animation: blink 1s step-end infinite;
+    color: transparent;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+</style>

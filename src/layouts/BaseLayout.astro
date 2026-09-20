@@ -1,4 +1,10 @@
 ---
+import { ClientRouter } from 'astro:transitions';
+import Terminal from '@/components/Terminal.jsx';
+import DataTicker from '@/components/DataTicker.jsx';
+import MouseTrail from '@/components/MouseTrail.jsx';
+import DefconToggle from '@/components/DefconToggle.jsx';
+
 interface Props {
   title: string;
   description?: string;
@@ -19,40 +25,82 @@ const { title, description } = Astro.props;
   <meta property="og:title" content={title} />
   {description && <meta property="og:description" content={description} />}
   <meta property="og:type" content="website" />
-  <!-- TODO: Set og:url when deployment domain is registered -->
-  <!-- TODO: Set og:image when social preview asset is approved -->
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={title} />
-  {description && <meta name="twitter:description" content={description} />}
-  <!-- TODO: Set twitter:image when social preview asset is approved -->
+  <ClientRouter />
 
   <link rel="stylesheet" href="/src/styles/global.css">
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    // Console ASCII Art
+    document.addEventListener('astro:page-load', () => {
+      console.log("%c SYSTEM BREACH DETECTED ", "color: #e11d48; font-size: 20px; font-weight: bold; background: #050505; border: 1px solid #e11d48;");
+      console.log("%c UNAUTHORIZED ACCESS ATTEMPT LOGGED. ", "color: #38bdf8; font-size: 14px;");
+      console.log(`
+      _  __    _    ____ _____ _   _ ___ _  __  _  ___   _ __  __    _    ____  
+     | |/ /   / \\  |  _ \\_   _| | | |_ _| |/ / | |/ / | | |  \\/  |  / \\  |  _ \\ 
+     | ' /   / _ \\ | |_) || | | |_| || || ' /  | ' /| | | | |\\/| | / _ \\ | |_) |
+     | . \\  / ___ \\|  _ < | | |  _  || || . \\  | . \\| |_| | |  | |/ ___ \\|  _ < 
+     |_|\\_\\/_/   \\_\\_| \\_\\|_| |_| |_|___|_|\\_\\ |_|\\_\\\\___/|_|  |_/_/   \\_\\_| \\_\\
+      `);
+      console.log("%c [HINT]: SYSTEM_OVERRIDE_CODE = U U D D L R L R B A ", "color: #38bdf8; font-size: 12px; font-family: monospace;");
+    });
+
+    // Konami Code Protocol
+    let konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+    let konamiPosition = 0;
+    
+    document.addEventListener('keydown', function(e) {
+      if (e.key === konamiCode[konamiPosition]) {
+        konamiPosition++;
+        if (konamiPosition === konamiCode.length) {
+          alert('KONAMI CODE ACCEPTED. ENGAGING RAW TERMINAL OVERRIDE.');
+          document.body.innerHTML = document.body.innerHTML.replace(/<[^>]*>?/gm, '');
+          document.body.style.cssText = "background: #000; color: #0f0; font-family: monospace; font-size: 16px; padding: 20px; white-space: pre-wrap;";
+          konamiPosition = 0;
+        }
+      } else {
+        konamiPosition = 0;
+      }
+    });
+  </script>
 </head>
 <body>
+  <MouseTrail client:only="react" />
   <a href="#main-content" class="skip-link">Skip to main content</a>
+  <Terminal client:load />
 
-  <header>
-    <nav aria-label="Primary navigation">
-      <a href="/" aria-label="Karthik Kumar - Home">Karthik Kumar</a>
-      <ul>
-        <li><a href="/work">Work</a></li>
-        <li><a href="/profile">Profile</a></li>
-        <li><a href="/contact">Contact</a></li>
-        <li><a href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a></li>
-      </ul>
-    </nav>
+  <header class="top-nav">
+    <div class="nav-container">
+      <a href="/" class="brand font-mono text-ice">KARTHIK_KUMAR</a>
+      <nav aria-label="Primary navigation">
+        <ul>
+          <li><a href="/work" class="font-mono">/WORK</a></li>
+          <li><a href="/profile" class="font-mono">/PROFILE</a></li>
+          <li><a href="/resume" class="font-mono">/RESUME</a></li>
+          <li><a href="/contact" class="font-mono text-crimson">/CONTACT</a></li>
+        </ul>
+      </nav>
+    </div>
   </header>
 
   <main id="main-content">
     <slot />
   </main>
 
-  <footer>
-    <p>&copy; {new Date().getFullYear()} Karthik Kumar</p>
+  <footer class="site-footer">
+    <div class="container font-mono text-muted">
+      <p>&copy; {new Date().getFullYear()} Karthik Kumar // SYSTEM_ONLINE</p>
+      <p class="terminal-hint">[PRESS '~' FOR SECURE ACCESS]</p>
+    </div>
   </footer>
+
+  <DataTicker client:load />
+  <DefconToggle client:load />
 </body>
 </html>
 
@@ -61,8 +109,8 @@ const { title, description } = Astro.props;
     position: absolute;
     top: -40px;
     left: 0;
-    background: var(--color-graphite);
-    color: var(--color-text-on-dark);
+    background: var(--color-crimson);
+    color: var(--color-bg);
     padding: var(--space-2) var(--space-4);
     text-decoration: none;
     z-index: 100;
@@ -72,12 +120,17 @@ const { title, description } = Astro.props;
     top: 0;
   }
 
-  header {
-    border-bottom: 1px solid var(--color-border-light);
+  .top-nav {
+    border-bottom: var(--border-hairline);
     padding: var(--space-4) 0;
+    background: rgba(5, 5, 5, 0.8);
+    backdrop-filter: blur(12px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
   }
 
-  nav {
+  .nav-container {
     max-width: var(--content-max);
     margin: 0 auto;
     padding: 0 var(--space-4);
@@ -86,43 +139,53 @@ const { title, description } = Astro.props;
     align-items: center;
   }
 
-  nav > a {
-    font-family: var(--font-technical);
+  .brand {
     font-size: 0.875rem;
-    color: var(--color-text-on-light);
+    font-weight: 500;
+    letter-spacing: 0.05em;
   }
 
   nav ul {
     list-style: none;
     padding: 0;
     display: flex;
-    gap: var(--space-6);
+    gap: var(--space-8);
   }
 
   nav a {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
     color: var(--color-text-muted);
     transition: color 0.2s ease;
   }
 
   nav a:hover,
   nav a:focus {
-    color: var(--color-teal-text-light);
+    color: var(--color-text-main);
   }
 
-  footer {
+  .site-footer {
     margin-top: var(--space-32);
-    padding: var(--space-8) var(--space-4);
-    border-top: 1px solid var(--color-border-light);
+    padding: var(--space-8) 0;
+    border-top: var(--border-hairline);
     text-align: center;
+    font-size: 0.75rem;
+    margin-bottom: 40px; /* Space for ticker */
   }
 
-  footer p {
-    font-size: 0.875rem;
-    color: var(--color-text-muted);
+  .terminal-hint {
+    opacity: 0.3;
+    margin-top: var(--space-2);
+    transition: all 0.3s ease;
+  }
+  
+  .terminal-hint:hover {
+    opacity: 1;
+    color: var(--color-crimson);
   }
 
   @media (max-width: 768px) {
-    nav {
+    .nav-container {
       flex-direction: column;
       gap: var(--space-4);
     }

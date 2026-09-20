@@ -1,115 +1,139 @@
 ---
 import BaseLayout from '@/layouts/BaseLayout.astro';
+import DecoderText from '@/components/DecoderText.jsx';
 ---
 
 <BaseLayout title="Contact — Karthik Kumar" description="Direct contact information for Karthik Kumar.">
   <section class="contact-container">
     <header class="contact-header">
-      <h1>Contact</h1>
-      <p class="contact-intro">Direct lines of communication. Standard response time is 24-48 hours for professional inquiries.</p>
+      <h1><DecoderText client:load text="/CONTACT" delay={300} /></h1>
+      <p class="contact-intro text-muted font-mono">Direct lines of communication. Standard response time is 24-48 hours for professional inquiries.</p>
     </header>
 
     <div class="contact-methods">
       <article class="contact-card">
-        <h2>Email</h2>
-        <p>Preferred for asynchronous communication and detailed technical inquiries.</p>
-        <a href="mailto:karthikyt369@gmail.com" class="contact-link" aria-label="Send email to Karthik Kumar">
-          karthikyt369@gmail.com
+        <h2 class="text-ice font-mono">EMAIL_PROTOCOL</h2>
+        <p class="text-muted">Preferred for asynchronous communication and detailed technical inquiries.</p>
+        <a href="mailto:karthikyt369@gmail.com" class="contact-link font-mono" aria-label="Send email to Karthik Kumar">
+          > <span class="redactable">karthikyt369@gmail.com</span>
         </a>
       </article>
 
       <article class="contact-card">
-        <h2>Professional Network</h2>
-        <p>Available for networking, endorsements, and direct messaging regarding opportunities.</p>
-        <a href="https://linkedin.com/in/karthik-kumar-minuga" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="Connect with Karthik Kumar on LinkedIn">
-          linkedin.com/in/karthik-kumar-minuga ↗
+        <h2 class="text-ice font-mono">LINKEDIN_NETWORK</h2>
+        <p class="text-muted">Available for networking, endorsements, and direct messaging regarding opportunities.</p>
+        <a href="https://linkedin.com/in/karthik-kumar-minuga" target="_blank" rel="noopener noreferrer" class="contact-link font-mono" aria-label="Connect on LinkedIn">
+          > INITIATE_CONNECTION
         </a>
       </article>
-
+      
       <article class="contact-card">
-        <h2>Code Archive</h2>
-        <p>Source repositories, open-source contributions, and experiment prototypes.</p>
-        <a href="https://github.com/karthik-kumarux" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="View Karthik Kumar's GitHub repositories">
-          github.com/karthik-kumarux ↗
+        <h2 class="text-ice font-mono">GITHUB_REPOSITORY</h2>
+        <p class="text-muted">Open source contributions, personal projects, and code samples.</p>
+        <a href="https://github.com/karthik-kumarux" target="_blank" rel="noopener noreferrer" class="contact-link font-mono" aria-label="View GitHub Profile">
+          > VIEW_SOURCE
         </a>
       </article>
-
-      <!-- Optionally include Phone if it's considered safe. Given this is public internet, I will omit phone from web explicitly to avoid spam unless they read the resume PDF -->
     </div>
   </section>
 </BaseLayout>
 
 <style>
   .contact-container {
-    max-width: var(--reading-max);
+    max-width: var(--content-max);
     margin: 0 auto;
-    padding: var(--space-12) var(--space-4) var(--space-16);
+    padding: var(--space-8) var(--space-4) var(--space-32);
   }
 
   .contact-header {
-    margin-bottom: var(--space-12);
+    margin-bottom: var(--space-16);
+    border-bottom: var(--border-hairline);
+    padding-bottom: var(--space-8);
   }
 
   .contact-header h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 4rem);
-    font-weight: 400;
-    line-height: 1.1;
+    font-size: clamp(3rem, 6vw, 5rem);
     margin-bottom: var(--space-4);
+    line-height: 1;
   }
 
   .contact-intro {
-    font-size: 1.125rem;
-    color: var(--color-text-muted);
-    line-height: 1.6;
+    font-size: 1rem;
+    max-width: 600px;
   }
 
   .contact-methods {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: var(--space-8);
   }
 
   .contact-card {
-    padding: var(--space-6);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-md);
-    background-color: transparent;
-    transition: border-color 0.2s ease;
+    position: relative;
+    border: var(--border-hairline);
+    border-left: 2px solid rgba(255, 255, 255, 0.08);
+    padding: var(--space-8);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(15, 15, 17, 0.5);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 250px;
+  }
+
+  .contact-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(90deg, var(--color-ice-blue-glow) 0%, transparent 100%);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
   }
 
   .contact-card:hover,
   .contact-card:focus-within {
-    border-color: var(--color-teal-text-light);
+    border-color: rgba(255, 255, 255, 0.15);
+    border-left-color: var(--color-ice-blue);
+    background: rgba(20, 20, 22, 0.8);
+    transform: translateX(4px);
+  }
+
+  .contact-card:hover::before,
+  .contact-card:focus-within::before {
+    width: 100%;
+  }
+
+  .contact-card h2, 
+  .contact-card p, 
+  .contact-card a {
+    position: relative;
+    z-index: 2;
   }
 
   .contact-card h2 {
-    font-family: var(--font-display);
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-bottom: var(--space-2);
-    color: var(--color-text-on-light);
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-4);
   }
 
   .contact-card p {
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-4);
-    font-size: 0.9375rem;
+    font-size: 0.875rem;
+    margin-bottom: var(--space-8);
+    line-height: 1.6;
   }
 
   .contact-link {
-    display: inline-block;
-    font-family: var(--font-technical);
-    font-size: 1rem;
-    color: var(--color-teal-text-light);
-    text-decoration: none;
-    font-weight: 500;
+    font-size: 0.875rem;
+    color: var(--color-ice-blue);
+    margin-top: auto;
+    transition: color 0.2s ease;
   }
 
-  .contact-link:hover,
-  .contact-link:focus {
-    color: var(--color-signal-text-light);
-    text-decoration: underline;
-    text-underline-offset: 4px;
+  .contact-link:hover {
+    color: var(--color-text-main);
   }
 </style>

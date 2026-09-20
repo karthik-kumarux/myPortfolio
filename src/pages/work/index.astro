@@ -3,40 +3,22 @@ import BaseLayout from '@/layouts/BaseLayout.astro';
 import { projects } from '@/content/projects';
 ---
 
-<BaseLayout title="Work — Karthik Kumar" description="Selected engineering projects spanning AI/ML systems, security automation, and developer tooling">
-  <section class="work-index">
+<BaseLayout title="Work — Karthik Kumar" description="Portfolio of projects spanning generative AI, security automation, and developer tooling.">
+  <section class="work-container">
     <header class="work-header">
-      <h1>Work</h1>
-      <p class="work-intro">Selected projects demonstrating systems-level engineering across AI/ML, security automation, and developer tooling.</p>
+      <h1>/PROJECTS</h1>
+      <p class="work-intro text-muted font-mono">Index of deployed systems, security tools, and machine learning pipelines.</p>
     </header>
 
-    <div class="projects-list">
+    <div class="work-grid">
       {projects.map((project) => (
-        <article class="project-card" data-storytelling-mode={project.storytellingMode}>
-          <div class="project-meta">
-            <span class="project-id">{project.id}</span>
-            <span class="project-type">{project.storytellingMode}</span>
+        <article class="work-card">
+          <div class="card-header">
+            <h3>{project.title}</h3>
+            <span class="work-type font-mono text-muted">[{project.tags[0]}]</span>
           </div>
-
-          <h2>
-            <a href={`/work/${project.id}`}>{project.title}</a>
-          </h2>
-
-          <p class="project-summary">{project.summary}</p>
-
-          <div class="project-tags">
-            {project.tags.map((tag) => (
-              <span class="tag">{tag}</span>
-            ))}
-          </div>
-
-          {project.links?.github && (
-            <div class="project-links">
-              <a href={project.links.github} target="_blank" rel="noopener noreferrer" class="link-github">
-                View repository →
-              </a>
-            </div>
-          )}
+          <p class="summary">{project.summary}</p>
+          <a href={`/work/${project.id}`} class="work-link font-mono text-crimson" aria-label={`View ${project.title} case study`}>EXPLORE_DATA_SET</a>
         </article>
       ))}
     </div>
@@ -44,138 +26,146 @@ import { projects } from '@/content/projects';
 </BaseLayout>
 
 <style>
-  .work-index {
+  .work-container {
     max-width: var(--content-max);
     margin: 0 auto;
-    padding: var(--space-12) var(--space-4);
+    padding: var(--space-8) var(--space-4) var(--space-32);
   }
 
   .work-header {
-    max-width: var(--reading-max);
     margin-bottom: var(--space-16);
+    border-bottom: var(--border-hairline);
+    padding-bottom: var(--space-8);
   }
 
   .work-header h1 {
-    font-family: var(--font-display);
-    font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: 500;
+    font-size: clamp(3rem, 6vw, 5rem);
     margin-bottom: var(--space-4);
+    line-height: 1;
   }
 
   .work-intro {
-    font-size: 1.125rem;
-    color: var(--color-text-muted);
-    line-height: 1.6;
+    font-size: 1rem;
+    max-width: 600px;
   }
 
-  .projects-list {
+  .work-grid {
     display: grid;
-    gap: var(--space-12);
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: var(--space-8);
   }
 
-  .project-card {
+  .work-card {
+    position: relative;
+    border: var(--border-hairline);
+    border-left: 2px solid rgba(255, 255, 255, 0.08);
     padding: var(--space-8);
-    border: 1px solid var(--color-border-light);
-    border-radius: var(--radius-md);
-    transition: border-color 0.2s ease;
-  }
-
-  .project-card:hover,
-  .project-card:focus-within {
-    border-color: var(--color-teal-text-light);
-  }
-
-  .project-meta {
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    background: rgba(15, 15, 17, 0.5);
+    overflow: hidden;
     display: flex;
-    gap: var(--space-3);
-    align-items: center;
-    margin-bottom: var(--space-3);
-    font-family: var(--font-technical);
-    font-size: 0.8125rem;
-    color: var(--color-text-muted);
+    flex-direction: column;
+    transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transform-style: preserve-3d;
+    will-change: transform;
   }
 
-  .project-id {
-    text-transform: uppercase;
-    letter-spacing: 0.02em;
+  .work-card::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 0;
+    background: linear-gradient(90deg, var(--color-crimson-glow) 0%, transparent 100%);
+    transition: width 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 0;
   }
 
-  .project-type {
-    opacity: 0.7;
+  .work-card:hover,
+  .work-card:focus-within {
+    border-color: rgba(255, 255, 255, 0.15);
+    border-left-color: var(--color-crimson);
+    background: rgba(20, 20, 22, 0.8);
   }
 
-  .project-card h2 {
-    font-family: var(--font-display);
+  .work-card:hover::before,
+  .work-card:focus-within::before {
+    width: 100%;
+  }
+
+  .card-header, .summary, .work-link {
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: var(--space-4);
+    border-bottom: var(--border-hairline);
+    padding-bottom: var(--space-4);
+  }
+
+  .card-header h3 {
     font-size: 1.5rem;
     font-weight: 500;
-    margin-bottom: var(--space-3);
   }
 
-  .project-card h2 a {
-    color: var(--color-text-on-light);
-    transition: color 0.2s ease;
+  .work-type {
+    font-size: 0.75rem;
   }
 
-  .project-card h2 a:hover,
-  .project-card h2 a:focus {
-    color: var(--color-teal-text-light);
+  .summary {
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-8);
+    flex-grow: 1;
   }
 
-  .project-summary {
-    color: var(--color-text-on-light);
-    line-height: 1.6;
-    margin-bottom: var(--space-4);
-  }
-
-  .project-tags {
-    display: flex;
-    flex-wrap: wrap;
+  .work-link {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    display: inline-flex;
+    align-items: center;
     gap: var(--space-2);
-    margin-bottom: var(--space-4);
   }
 
-  .tag {
-    display: inline-block;
-    padding: var(--space-1) var(--space-3);
-    background-color: var(--color-mist);
-    color: var(--color-text-on-light);
-    font-size: 0.8125rem;
-    border-radius: var(--radius-sm);
-    font-family: var(--font-technical);
+  .work-link::after {
+    content: '>';
+    transition: transform 0.2s ease;
   }
 
-  .project-links {
-    margin-top: var(--space-4);
-  }
-
-  .link-github {
-    display: inline-block;
-    color: var(--color-teal-text-light);
-    font-weight: 500;
-    font-size: 0.9375rem;
-    transition: color 0.2s ease;
-  }
-
-  .link-github:hover,
-  .link-github:focus {
-    color: var(--color-signal-text-light);
-  }
-
-  @media (max-width: 768px) {
-    .work-index {
-      padding: var(--space-8) var(--space-4);
-    }
-
-    .work-header {
-      margin-bottom: var(--space-12);
-    }
-
-    .projects-list {
-      gap: var(--space-8);
-    }
-
-    .project-card {
-      padding: var(--space-6);
-    }
+  .work-link:hover::after {
+    transform: translateX(4px);
   }
 </style>
+
+<script>
+  document.addEventListener('astro:page-load', () => {
+    const cards = document.querySelectorAll('.work-card');
+    cards.forEach(card => {
+      const el = card as HTMLElement;
+      el.addEventListener('mousemove', (e) => {
+        const rect = el.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        
+        const rotateX = ((y - centerY) / centerY) * -10;
+        const rotateY = ((x - centerX) / centerX) * 10;
+        
+        el.style.setProperty('--rx', `${rotateX}deg`);
+        el.style.setProperty('--ry', `${rotateY}deg`);
+      });
+      
+      el.addEventListener('mouseleave', () => {
+        el.style.setProperty('--rx', '0deg');
+        el.style.setProperty('--ry', '0deg');
+        el.style.transition = 'all 0.5s ease';
+        setTimeout(() => { el.style.transition = 'all 0.3s cubic-bezier(0.16, 1, 0.3, 1)'; }, 500);
+      });
+    });
+  });
+</script>
